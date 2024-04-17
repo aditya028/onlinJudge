@@ -1,7 +1,7 @@
 # Online Judge
 
 [![Build Status](https://img.shields.io/travis/{username}/{repository}?style=flat-square)](https://travis-ci.org/{username}/{repository})
-[![License](https://img.shields.io/github/license/{username}/{repository}?style=flat-square)](https://github.com/{username}/{repository}/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/{username}/{repository}?style=flat-square)](https://github.com/aditya028/onlineJudge/blob/master/LICENSE)
 
 ## Description
 
