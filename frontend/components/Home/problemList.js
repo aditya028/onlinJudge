@@ -1,8 +1,8 @@
 export default function ProblemList() {
   return (
     <div
-      style={{ boxShadow: "0 -5px 5px -6px #fff, 0 5px 5px -6px #fff" }}
-      className="p-5 shadow-md max-w-[1200px] mt-[100px] mb-[100px] m-auto "
+      // style={{ boxShadow: "0 -5px 5px -6px #fff, 0 5px 5px -6px #fff" }}
+      className="p-5 shadow-lg max-w-[1200px] "
     >
       <div className=" overflow-x-auto">
         <table className="table table-zebra">
@@ -76,7 +76,7 @@ export default function ProblemList() {
       <div className="flex flex-row-reverse mt-4 ">
         <div className="join">
           <button className="join-item btn btn-sm hover:bg-[#D0589E]">«</button>
-          <button className="join-item btn btn-sm">Page 22</button>
+          <button className="join-item btn btn-sm">Page 1</button>
           <button className="join-item btn btn-sm hover:bg-[#D0589E]">»</button>
         </div>
       </div>

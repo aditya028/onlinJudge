@@ -16,7 +16,10 @@ export default function Home() {
         </div>
         <div className="text-[250px] font-semibold text-[#D0589E]">{"</>"}</div>
       </div>
+      <div className="my-[100px] mx-auto max-w-[1200px]">
+
         <ProblemList />
+      </div>
     </>
   );
 }
