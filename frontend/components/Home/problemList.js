@@ -48,21 +48,27 @@ export default function ProblemList() {
                   />
                 </svg>
               </td>
-              <td>Blue</td>
+              <td>
+                <div className="badge badge-success gap-2">Easy</div>
+              </td>
             </tr>
             {/* row 2 */}
             <tr>
               <th>2</th>
               <td>Hart Hagerty</td>
               <td>Desktop Support Technician</td>
-              <td>Purple</td>
+              <td>
+                <div className="badge badge-warning gap-2">Medium</div>
+              </td>
             </tr>
             {/* row 3 */}
             <tr>
               <th>3</th>
               <td>Brice Swyre</td>
               <td>Tax Accountant</td>
-              <td>Red</td>
+              <td>
+                <div className="badge badge-error gap-2">Hard</div>
+              </td>
             </tr>
           </tbody>
         </table>
