@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ProblemList() {
   return (
     <div
@@ -32,7 +34,7 @@ export default function ProblemList() {
                 </svg>
               </th>
               <td className="hover:cursor-pointer hover:text-sky-500">
-                Cy Ganderton
+                <Link href="/problem/1">problem 1</Link>
               </td>
               <td>
                 <svg

@@ -1,5 +1,6 @@
 "use client"
 import ProblemList from "@/components/Home/problemList";
+import Submission from "@/components/submission";
 import { useState } from "react";
 
 export default function MyAccountPage() {
@@ -61,7 +62,7 @@ export default function MyAccountPage() {
             All Submissions
           </button>
         </div>
-        <ProblemList />
+        {isRecentActive ? <ProblemList /> : <Submission/>}
       </div>
     </div>
   );
