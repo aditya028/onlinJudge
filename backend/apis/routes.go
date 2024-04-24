@@ -6,10 +6,13 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func PublicRouter() {
+func PublicRouter() http.Handler{
 	r := chi.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, World!"))
+		w.Write([]byte("Welcome to online Judge API!"))
 	})
+	r.Post("/login", login)
+	r.Post("/signup", signup)
+	return r 
 }

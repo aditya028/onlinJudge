@@ -1,18 +1,23 @@
 package main
 
 import (
-	"net/http"
+	"log"
+	"onlineJudge-backend/apis"
+	"onlineJudge-backend/internal/db"
 
-	"github.com/go-chi/chi"
-	
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	r := chi.NewRouter()
+	// Load .env file
+	err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file: %v", err)
+    }
 
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("Hello, World!"))
-		})
+	// Connect to database
+	db.ConnectDB()
 
-	http.ListenAndServe(":8080", r)
+	// Server the API
+	apis.ServeAPI()
 }
