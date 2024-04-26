@@ -15,5 +15,6 @@ func PublicRouter() http.Handler{
 	r.Post("/login", login)
 	r.Post("/signup", signup)
 	r.Get("/problems", problem)
+	r.Get("/solution", solution)
 	return r 
 }
