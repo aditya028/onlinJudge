@@ -7,6 +7,7 @@ require github.com/go-chi/chi v1.5.5
 require github.com/google/go-cmp v0.6.0 // indirect
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/joho/godotenv v1.5.1
 	github.com/klauspost/compress v1.13.6 // indirect
