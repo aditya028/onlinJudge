@@ -16,7 +16,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func login(w http.ResponseWriter, r *http.Request) {
+func signin(w http.ResponseWriter, r *http.Request) {
 	// Get user info from request
 	password := r.FormValue("password")
 	email := r.FormValue("email")
@@ -63,4 +63,5 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(tokenString))
+	
 }

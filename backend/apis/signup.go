@@ -2,7 +2,6 @@ package apis
 
 import (
 	"context"
-	"errors"
 	"log"
 	"net/http"
 	collection "onlineJudge-backend/internal/constant"
@@ -18,6 +17,8 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	email := r.FormValue("email")
+
+	log.Println(username, password, email)
 
 	// check if value is empty or not
 	if username == "" || password == "" || email == "" {
@@ -39,7 +40,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	// create hash for password
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Println(errors.New("error while hashing password"))
+		log.Println("error while hashing password" , err)
 		http.Error(w, "Error while hashing password", http.StatusInternalServerError)
 		return
 	}
@@ -52,7 +53,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	}
 	_, err = coll.InsertOne(context.TODO(), doc)
 	if err != nil {
-		log.Println(errors.New("error while inserting user into database"))
+		log.Println("error while inserting user into database" , err)
 		http.Error(w, "Error while inserting user into database", http.StatusInternalServerError)
 		return
 	}
