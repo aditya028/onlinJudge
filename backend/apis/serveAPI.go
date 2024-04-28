@@ -12,7 +12,14 @@ func ServeAPI() {
 	r.Mount("/api", PublicRouter())
 	log.Println("Server is running on port 8080")
 	
-	handler := cors.Default().Handler(r)
+	corsHandler := cors.New(cors.Options{
+        AllowedOrigins:   []string{"*"}, // Allow all origins
+        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
+        AllowedHeaders:   []string{"Authorization", "Content-Type"}, // Allow Authorization and Content-Type headers
+        AllowCredentials: true,
+    })
+
+    handler := corsHandler.Handler(r)
 
 	http.ListenAndServe(":8080", handler)
 }

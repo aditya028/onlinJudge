@@ -3,7 +3,8 @@ import { useState } from "react";
 
 export default function CodeArena() {
   const [language, setLanguage] = useState("cpp");
-    const [testTab ,setTestTab] = useState(1) ;
+  const [testTab, setTestTab] = useState(1);
+  const [code , setCode] = useState("//Enter your code here") ;
 
   return (
     <div className="flex flex-col gap-2 w-[50%]">
@@ -20,32 +21,44 @@ export default function CodeArena() {
             defaultValue={"cpp"}
           >
             <option>cpp</option>
-            <option>java</option>
-            <option>python</option>
+            <option disabled>java</option>
+            <option disabled>python</option>
           </select>
         </div>
         {/* editor */}
         <Editor
           height="calc(100% - 3rem)"
           defaultLanguage={language}
-          defaultValue="// Write your code here"
           theme="vs-dark"
           options={{ fontSize: 16, padding: 2 }}
+          value={code}
+          onChange={(value) => setCode(value)}
         />
       </div>
 
       {/* output */}
-      <div className="h-[37vh] bg-[#262626]  rounded-lg overflow-hidden overflow-y-scroll">
+      <div className="h-[37vh] bg-[#262626] flex justify-between flex-col rounded-lg overflow-hidden overflow-y-scroll">
         <div className="h-10 bg-base-200">
           <div role="tablist" className="tabs tabs-bordered max-w-[300px]">
-            <button role="tab" className={`tab ${testTab === 1 ? 'tab-active' : ''}`} onClick={() => setTestTab(1)}>
-              Test Case
-            </button>
-            <button role="tab" className={`tab ${testTab === 2 ? 'tab-active' : ''}`} onClick={() => setTestTab(2)}>
+            <button
+              role="tab"
+              className={`tab ${testTab === 1 ? "tab-active" : ""}`}
+              onClick={() => setTestTab(1)}
+            >
               Test Result
             </button>
-            
+            <button
+              role="tab"
+              className={`tab ${testTab === 2 ? "tab-active" : ""}`}
+              onClick={() => setTestTab(2)}
+            >
+              Test Case
+            </button>
           </div>
+        </div>
+        <div className="flex justify-center items-center gap-3 py-1">
+          <button className="btn btn-sm btn-neutral">Run</button>
+          <button className="btn btn-sm btn-success">Submit</button>
         </div>
       </div>
     </div>

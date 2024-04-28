@@ -7,9 +7,9 @@ export default async function signUP(params) {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    return response.data;
+    return response;
   } catch (error) {
     console.error(`Error: ${error}`);
-    throw error;
+    return error;
   }
 }

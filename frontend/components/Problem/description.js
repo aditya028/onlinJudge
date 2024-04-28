@@ -1,22 +1,27 @@
 import Example from "./example";
 
-export default function Description() {
+export default function Description({ problem }) {
   return (
     <div className="flex flex-col mx-4 my-6 gap-4">
-      <h1 className="text-[26px] font-semibold">1. First Problem</h1>
-      <div className="badge badge-success gap-2">Easy</div>
+      <h1 className="text-[26px] font-semibold">{problem.title}</h1>
+      <div
+        className={`badge badge-${
+          problem.difficulty == "easy"
+            ? "success"
+            : problem.difficulty == "medium"
+            ? "warning"
+            : "error"
+        } gap-2`}
+      >
+        {problem.difficulty}
+      </div>
       <p>
-        lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc ultricies 
-        scelerisque. Nullam vel enim nec est lacinia posuere. Donec ac ex ac nunc ultricies scelerisque.
-        Nullam vel enim nec est lacinia posuere. Donec ac ex ac nunc ultricies scelerisque. Nullam vel enim
-        nec est lacinia posuere. Donec ac ex ac nunc ultricies scelerisque. Nullam vel enim nec est lacinia
-        posuere. Donec ac ex ac nunc ultricies scelerisque. Nullam vel enim nec est lacinia posuere. Donec ac
-        ex ac nunc ultricies scelerisque. Nullam vel enim nec est lacinia posuere. Donec ac ex ac nunc ultricies
-        scelerisque. Nullam vel enim nec est lacinia posuere. Donec ac ex ac nunc ultricies scelerisque. Nullam
-        vel enim nec est lacinia posuere. Donec ac ex ac nunc ultricies scelerisque. Nullam vel enim nec est
+        {problem.description}
       </p>
-      <Example input="1 2" output="3" />
-      <Example input="1 2 3 1 3 4" output="32" />
+      {problem.example?.map((example, index) => (
+        <Example key={index} input={example.input} output={example.output} />
+      ))}
+      
     </div>
   );
 }

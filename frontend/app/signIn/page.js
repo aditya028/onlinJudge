@@ -1,8 +1,13 @@
 "use client";
 
+import Toast from "@/components/toast";
 import signIN from "@/utils/signin";
+import { useState } from "react";
 
 export default function SignInPage() {
+
+  const [toastMessgae, setToastMessage] = useState("");
+
   const handleSignIn = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -10,15 +15,19 @@ export default function SignInPage() {
     const password = formData.get("password");
     signIN({ email, password })
       .then((response) => {
-        console.log(response);
+        localStorage.setItem('token', response);
+        location.href = "/";
       })
       .catch((error) => {
+        setToastMessage("Sign In Failed :(Please try again)");
         console.error(error);
       });
   };
 
   return (
     <div className="flex h-screen w-full items-center justify-center ">
+      {toastMessgae && <Toast message={toastMessgae} setToastMessage={setToastMessage} />}
+
       <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
         <div className="text-white">
           <div className="mb-8 flex flex-col items-center">

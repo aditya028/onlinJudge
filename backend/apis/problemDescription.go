@@ -9,32 +9,31 @@ import (
 	"onlineJudge-backend/internal/db"
 	"onlineJudge-backend/model"
 
+	"github.com/go-chi/chi"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func problem(w http.ResponseWriter, r *http.Request) {
+func problemDescription(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Println("Failed to convert id to objectID", err)
+		http.Error(w, "Invalid problem id", http.StatusBadRequest)
+		return
+	}
 
 	coll := db.Client.Database(collection.DB_NAME).Collection(collection.PROBLEM)
-	cursor, err := coll.Find(context.TODO(), bson.M{})
+	cursor := coll.FindOne(context.TODO(), bson.M{"_id": objectID})
+
+	problem := model.Problem{}
+	err = cursor.Decode(&problem)
 	if err != nil {
-		log.Println("Failed to fetch problems", err)
+		log.Println("Failed to decode problem", err)
 		http.Error(w, "Failed to fetch problems", http.StatusInternalServerError)
 		return
 	}
-	defer cursor.Close(context.Background())
-
-	var problems []model.Problem
-	for cursor.Next(context.TODO()) {
-		var problem model.Problem
-		err := cursor.Decode(&problem)
-		if err != nil {
-			log.Println("Failed to decode problem", err)
-			http.Error(w, "Failed to fetch problems", http.StatusInternalServerError)
-			return
-		}
-		problems = append(problems, problem)
-	}
-	resBytes, err := json.Marshal(problems)
+	resBytes, err := json.Marshal(problem)
 	if err != nil {
 		log.Println("Failed to marshal response", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)

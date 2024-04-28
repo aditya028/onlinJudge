@@ -4,11 +4,16 @@ import CodeArena from "@/components/Problem/codeArena";
 import Description from "@/components/Problem/description";
 import Solution from "@/components/Problem/solution";
 import Submission from "@/components/submission";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { fetchProblemDescription } from "@/utils/fetchProblems";
 
 export default function page() {
+  const pathname = usePathname();
+  const id = pathname.split("/")[2];
+
   const [tab, setTab] = useState(1);
+  const [problem , setProblem] = useState({}) ;
   const codeString = `class Solution {
     public:
         int maxArea(vector<int>& h) {
@@ -27,6 +32,18 @@ export default function page() {
             return maxArea ;
         }
     };`;
+
+  useEffect(() => {
+    // Fetch the problem statement
+    fetchProblemDescription(id)
+      .then((data) => {
+        setProblem(data);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
+      });
+  }, []);
+
   return (
     <div className="flex p-4 gap-4">
       {/* For problem statement */}
@@ -56,7 +73,7 @@ export default function page() {
             </button>
           </div>
         </div>
-        {tab === 1 && <Description />}
+        {tab === 1 && <Description problem={problem}/>}
         {tab === 2 && <Solution codeString={codeString} />}
         {tab === 3 && <Submission />}
       </div>

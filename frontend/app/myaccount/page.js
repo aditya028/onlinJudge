@@ -1,10 +1,21 @@
 "use client"
 import ProblemList from "@/components/Home/problemList";
 import Submission from "@/components/submission";
-import { useState } from "react";
+import fetchUser from "@/utils/fetchUser";
+import { useEffect, useState } from "react";
 
 export default function MyAccountPage() {
-    const [isRecentActive , setIsRecentActive] = useState(true)
+
+  const [isRecentActive , setIsRecentActive] = useState(true)
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    fetchUser().then((data) => {
+      setUser(data);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, [])
   return (
     <div className="flex flex-col max-w-[1200px] my-20 mx-auto">
       <div className="flex gap-4 m-auto">
@@ -13,7 +24,10 @@ export default function MyAccountPage() {
             <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
           </div>
           <div className="flex flex-col py-2 justify-between">
-            <span>Aditya Nandan</span>
+            <div>
+              <h1>{user?.username}</h1>
+              <span className="font-light text-[12px]">{user?.email}</span>
+            </div>
             <span>solved: 12</span>
           </div>
         </div>
