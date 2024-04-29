@@ -35,29 +35,29 @@ export default function MyAccountPage() {
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-green-400">Easy</span>
-              <span>10/21</span>
+              <span>5/21</span>
             </div>
             <progress
               className="progress progress-success w-56"
-              value="34"
+              value="25"
               max="100"
             ></progress>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-yellow-400">Medium</span>
-              <span>10/21</span>
+              <span>5/21</span>
             </div>
             <progress
               className="progress progress-warning w-56"
-              value="40"
+              value="25"
               max="100"
             ></progress>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-red-400">Hard</span>
-              <span>10/21</span>
+              <span>3/21</span>
             </div>
             <progress
               className="progress progress-error w-56"

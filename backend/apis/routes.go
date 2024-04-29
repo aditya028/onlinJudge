@@ -18,5 +18,6 @@ func PublicRouter() http.Handler{
 	r.Get("/problem/{id}", problemDescription)
 	r.Get("/solution", solution)
 	r.Get("/myaccount", myAccount)
+	r.Post("/submit/{id}", submit)
 	return r 
 }

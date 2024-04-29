@@ -79,7 +79,7 @@ export default function page() {
       </div>
 
       {/* For coding area and output */}
-      <CodeArena />
+      <CodeArena id={problem.id}/>
     </div>
   );
 }

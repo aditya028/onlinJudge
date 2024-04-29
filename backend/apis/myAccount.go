@@ -20,7 +20,6 @@ type result struct {
 }
 
 func myAccount(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("----------")
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
 	if tokenString == "" {

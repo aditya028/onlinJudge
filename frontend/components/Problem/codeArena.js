@@ -1,10 +1,26 @@
+import submitCode from "@/utils/submitCode";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
-export default function CodeArena() {
+export default function CodeArena({ id }) {
   const [language, setLanguage] = useState("cpp");
   const [testTab, setTestTab] = useState(1);
-  const [code , setCode] = useState("//Enter your code here") ;
+  const [code, setCode] = useState("//Enter your code here");
+  const [isCompiled, setIsCompiled] = useState(false);
+  const [result, setResult] = useState({});
+
+  const handleSubmit = () => {
+    submitCode(code, id)
+      .then((data) => {
+        if (data == "Compilation error")
+          setResult({ error: "Compilation error" });
+        else setResult(data);
+      })
+      .catch((error) => {
+        console.error(`Error - ${error}`);
+      });
+    setIsCompiled(true);
+  };
 
   return (
     <div className="flex flex-col gap-2 w-[50%]">
@@ -56,9 +72,51 @@ export default function CodeArena() {
             </button>
           </div>
         </div>
+        {isCompiled ? (
+          result.error ? (
+            <div className="mx-auto p-5 font-semibold badge badge-error gap-2">{result.error}</div>
+          ) : (
+            <div className="p-5 flex flex-col gap-3 overflow-y-scroll">
+              <div
+                className={`badge badge-${
+                  result.accepted ? "success" : "error"
+                } gap-2`}
+              >
+                {result.accepted ? "Accepted" : "Wrong Answer"}
+              </div>
+              <div>
+                <h3 className="text-[#9e9e9e]">Std Input</h3>
+                <pre className="bg-[#2b2b2b] p-4 rounded-lg ">
+                  {result.stdInput}
+                </pre>
+              </div>
+              <div>
+                <h3 className="text-[#9e9e9e]">Std Output</h3>
+                <pre className="bg-[#2b2b2b] p-4 rounded-lg">
+                  {result.stdOutput}
+                </pre>
+              </div>
+              <div>
+                <h3 className="text-[#9e9e9e]">Expected Output</h3>
+                <pre className="bg-[#2b2b2b] p-4 rounded-lg">
+                  {result.expOutput}
+                </pre>
+              </div>
+            </div>
+          )
+        ) : (
+          ""
+        )}
         <div className="flex justify-center items-center gap-3 py-1">
-          <button className="btn btn-sm btn-neutral">Run</button>
-          <button className="btn btn-sm btn-success">Submit</button>
+          <button disabled className="btn btn-sm btn-neutral">
+            Run
+          </button>
+          <button
+            className="btn btn-sm btn-success"
+            onClick={() => handleSubmit()}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
