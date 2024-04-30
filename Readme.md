@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/{username}/{repository}?style=flat-square)](https://travis-ci.org/{username}/{repository})
 [![License](https://img.shields.io/github/license/{username}/{repository}?style=flat-square)](https://github.com/aditya028/onlineJudge/blob/master/LICENSE)
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/Tl4bQBfOtbg/0.jpg)](http://www.youtube.com/watch?v=Tl4bQBfOtbg)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/sHLP9z4lS5Q/0.jpg)](http://www.youtube.com/watch?v=sHLP9z4lS5Q)
 
 ## Description
 
