@@ -1,13 +1,15 @@
 "use client"
 import ProblemList from "@/components/Home/problemList";
 import Submission from "@/components/submission";
+import { fetchSubmissions } from "@/utils/fetchSubmissions";
 import fetchUser from "@/utils/fetchUser";
 import { useEffect, useState } from "react";
 
 export default function MyAccountPage() {
 
-  const [isRecentActive , setIsRecentActive] = useState(true)
+  const [isRecentActive , setIsRecentActive] = useState(false)
   const [user, setUser] = useState(null);
+  const [submissions, setSubmissions] = useState();
   
   useEffect(() => {
     fetchUser().then((data) => {
@@ -16,6 +18,16 @@ export default function MyAccountPage() {
       console.log(error);
     })
   }, [])
+
+  useEffect(() => {
+    const params = isRecentActive ? {isAccepted: true} : {} ;
+    fetchSubmissions(params).then((data) => {
+      setSubmissions(data);
+    }).catch((error) => {
+      console.log(error);
+    })
+  },[isRecentActive])
+
   return (
     <div className="flex flex-col max-w-[1200px] my-20 mx-auto">
       <div className="flex gap-4 m-auto">
@@ -76,7 +88,7 @@ export default function MyAccountPage() {
             All Submissions
           </button>
         </div>
-        {isRecentActive ? <ProblemList /> : <Submission/>}
+         <Submission submissions={submissions}/>
       </div>
     </div>
   );

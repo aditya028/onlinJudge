@@ -5,4 +5,5 @@ var (
 	USER = "users"
 	PROBLEM = "problem"
 	CODE = "code"
+	SUBMISSION = "submission"
 )

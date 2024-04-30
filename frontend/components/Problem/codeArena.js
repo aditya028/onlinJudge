@@ -2,7 +2,7 @@ import submitCode from "@/utils/submitCode";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
-export default function CodeArena({ id }) {
+export default function CodeArena({ id , title}) {
   const [language, setLanguage] = useState("cpp");
   const [testTab, setTestTab] = useState(1);
   const [code, setCode] = useState("//Enter your code here");
@@ -10,7 +10,7 @@ export default function CodeArena({ id }) {
   const [result, setResult] = useState({});
 
   const handleSubmit = () => {
-    submitCode(code, id)
+    submitCode(code, id , 'cpp' , title)
       .then((data) => {
         if (data == "Compilation error")
           setResult({ error: "Compilation error" });
@@ -112,6 +112,7 @@ export default function CodeArena({ id }) {
             Run
           </button>
           <button
+            disabled={localStorage.getItem("token") ? false : true}
             className="btn btn-sm btn-success"
             onClick={() => handleSubmit()}
           >

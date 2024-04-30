@@ -1,4 +1,5 @@
-export default function Submission() {
+export default function Submission({ submissions }) {
+
   return (
     <div className="overflow-x-auto my-4 mx-2">
       <table className="table">
@@ -12,27 +13,20 @@ export default function Submission() {
           </tr>
         </thead>
         <tbody>
-          {/* row 1 */}
-          <tr>
-            <th className="text-green-400">Accepted</th>
-            <td>First Problem</td>
-            <td>c++</td>
-            <td>14 march</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
+          {submissions?.map((submission) => (
+            <tr key={submission.id}>
+              <td
+                className={`text-${
+                  submission.isAccepted ? "green-400" : "red-400"
+                } font-semibold`}
+              >
+                {submission.isAccepted ? "Accepted" : "Wrong Answer"}
+              </td>
+              <td>{submission.title}</td>
+              <td>{submission.language}</td>
+              <td>{submission.time}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

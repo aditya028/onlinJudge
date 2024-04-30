@@ -10,7 +10,9 @@ import (
 )
 
 type RequestBody struct {
-	Code string `json:"code"`
+	Code     string `json:"code"`
+	Language string `json:"language"`
+	Title    string `json:"title"`
 }
 
 type Result struct {
@@ -35,8 +37,6 @@ func submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(email)
-
 	id := chi.URLParam(r, "id")
 
 	var reqBody RequestBody
@@ -46,6 +46,8 @@ func submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	codeString := reqBody.Code
+	language := reqBody.Language
+	title := reqBody.Title
 
 	testInput, testOutput, err := helper.GetTestCase(id)
 	if err != nil {
@@ -74,12 +76,14 @@ func submit(w http.ResponseWriter, r *http.Request) {
 
 	if stdOutput == testOutput {
 		result.Accepted = true
+		helper.CreateSubmission(codeString, id, email, language, title, true)
 		err := json.NewEncoder(w).Encode(result)
 		if err != nil {
 			helper.ErrorX(w, err, "Error decoding code")
 		}
 	} else {
 		result.Accepted = false
+		helper.CreateSubmission(codeString, id, email, language , title, false)
 		err := json.NewEncoder(w).Encode(result)
 		if err != nil {
 			helper.ErrorX(w, err, "Error decoding code")

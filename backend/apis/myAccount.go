@@ -14,7 +14,7 @@ import (
 	
 )
 
-type result struct {
+type UserResult struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
 }
@@ -48,7 +48,7 @@ func myAccount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ress := result{
+	ress := UserResult{
 		Username: user.Username,
 		Email:    user.Email,
 	}

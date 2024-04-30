@@ -7,6 +7,7 @@ import Submission from "@/components/submission";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { fetchProblemDescription } from "@/utils/fetchProblems";
+import { fetchSubmissions } from "@/utils/fetchSubmissions";
 
 export default function page() {
   const pathname = usePathname();
@@ -14,24 +15,7 @@ export default function page() {
 
   const [tab, setTab] = useState(1);
   const [problem , setProblem] = useState({}) ;
-  const codeString = `class Solution {
-    public:
-        int maxArea(vector<int>& h) {
-            int maxArea = 0 ;
-            int n = h.size() ;
-            int l = 0 , r = n-1 ;
-            while(l < r){
-                int minNum = min(h[l],h[r]) ;
-                maxArea = max(maxArea , minNum*(r-l)) ;
-                if(h[l] < h[r]) l++ ;
-                else if(h[l] > h[r]) r-- ;
-                else {
-                    r-- ; l++ ;
-                }
-            }
-            return maxArea ;
-        }
-    };`;
+  const [submissions , setSubmissions] = useState() ;
 
   useEffect(() => {
     // Fetch the problem statement
@@ -43,6 +27,17 @@ export default function page() {
         console.error(`Error: ${error}`);
       });
   }, []);
+
+  useEffect(() => {
+    if (tab !== 3) return;
+    fetchSubmissions({ problemId: id })
+      .then((data) => {
+        setSubmissions(data);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
+      });
+  },[tab]);
 
   return (
     <div className="flex p-4 gap-4">
@@ -74,12 +69,12 @@ export default function page() {
           </div>
         </div>
         {tab === 1 && <Description problem={problem}/>}
-        {tab === 2 && <Solution codeString={codeString} />}
-        {tab === 3 && <Submission />}
+        {tab === 2 && <Solution codeString={problem.code} />}
+        {tab === 3 && <Submission submissions={submissions}/>}
       </div>
 
       {/* For coding area and output */}
-      <CodeArena id={problem.id}/>
+      <CodeArena id={problem.id} title={problem.title}/>
     </div>
   );
 }
