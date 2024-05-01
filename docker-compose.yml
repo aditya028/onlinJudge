@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+ backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    volumes:
+      - ./backend:/app
+
  frontend:
     build: ./frontend
     ports:
@@ -9,13 +18,8 @@ services:
       - backend
     networks:
       - app-network
-
- backend:
-    build: ./backend
-    ports:
-      - "8080:8080"
-    networks:
-      - app-network
+    volumes:
+      - ./frontend:/app
 
 networks:
  app-network:

@@ -1,5 +1,10 @@
 export default function Submission({ submissions }) {
 
+  const getTime = (time) => {
+    const date = new Date(time);
+    return date.toLocaleString().substr(0, 10);
+  }
+
   return (
     <div className="overflow-x-auto my-4 mx-2">
       <table className="table">
@@ -24,7 +29,7 @@ export default function Submission({ submissions }) {
               </td>
               <td>{submission.title}</td>
               <td>{submission.language}</td>
-              <td>{submission.time}</td>
+              <td>{getTime(submission.time)}</td>
             </tr>
           ))}
         </tbody>
