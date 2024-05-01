@@ -25,13 +25,13 @@ Online Judge is a web application that allows users to solve programming problem
     git clone https://github.com/aditya028/onlinJudge.git
     ```
 
-2. Install the dependencies:
+2. Run Docker command:
 
     ```bash
-    npm install
+    docker-compose up --build
     ```
 
-3. Configure the environment variables:
+3. Configure the environment variables in backend:
 
     ```bash
     cp .env.example .env
@@ -42,7 +42,7 @@ Online Judge is a web application that allows users to solve programming problem
 4. Start the application:
 
     ```bash
-    npm start
+    docker compose up 
     ```
 
 5. Open your browser and visit `http://localhost:3000` to access the application.
