@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"onlineJudge-backend/internal/helper"
+	"onlineJudge-backend/model"
 
 	"github.com/go-chi/chi"
 )
@@ -61,20 +62,30 @@ func submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	stdOutput, err := helper.Execute(filePath, testInput)
-	if err != nil {
+	mqInput := helper.MessageQueue
+	mqInput <- model.CodeMessage{
+		Code:     codeString,
+		Language: language,
+		FilePath: filePath,
+		Input:    testInput,
+	}
+
+	mqOutput := helper.OutputQueue
+	output := <-mqOutput
+
+	if output.Error != nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, "Compilation error")
 		return
 	}
 
 	result := Result{
-		StdOutput: stdOutput,
+		StdOutput: output.Output,
 		StdInput:  testInput,
 		ExpOutput: testOutput,
 	}
 
-	if stdOutput == testOutput {
+	if output.Output == testOutput {
 		result.Accepted = true
 		helper.CreateSubmission(codeString, id, email, language, title, true)
 		err := json.NewEncoder(w).Encode(result)

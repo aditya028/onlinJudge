@@ -4,6 +4,7 @@ import (
 	"log"
 	"onlineJudge-backend/apis"
 	"onlineJudge-backend/internal/db"
+	"onlineJudge-backend/internal/helper"
 
 	"github.com/joho/godotenv"
 )
@@ -14,6 +15,13 @@ func main() {
     if err != nil {
         log.Fatalf("Error loading .env file: %v", err)
     }
+
+	// Implement message queue 
+	go func() {
+        for {
+            helper.Execute()
+        }
+    }()
 
 	// Connect to database
 	db.ConnectDB()

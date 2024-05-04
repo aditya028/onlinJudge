@@ -2,36 +2,55 @@ package helper
 
 import (
 	"bytes"
+	"onlineJudge-backend/model"
 	"os"
 	"os/exec"
 )
 
-func Execute(filePath, testInput string) (string, error) {
-	cmd := exec.Command("g++", filePath, "-o", "output")
+// Execute function takes a message from the message queue and executes the code
+// The function writes output and error to the message queue
+func Execute() {
+	mq := MessageQueue
+
+	msg := <-mq
+
+	outputMQ := OutputQueue
+
+	cmd := exec.Command("g++", msg.FilePath, "-o", "output")
 	err := cmd.Run()
 	if err != nil {
-		return "", err
+		outputMQ <- model.OutputMessage{
+			Error: err,
+		}
 	}
 
 	cmd = exec.Command("./output")
 
-	if testInput != "" {
-		cmd.Stdin = bytes.NewBufferString(testInput)
+	if msg.Input != "" {
+		cmd.Stdin = bytes.NewBufferString(msg.Input)
 	}
-	
+
 	output, err := cmd.Output()
 	if err != nil {
-		return "", err
+		outputMQ <- model.OutputMessage{
+			Error: err,
+		}
 	}
 
 	err = os.Remove("output")
 	if err != nil {
-		return "", err
+		outputMQ <- model.OutputMessage{
+			Error: err,
+		}
 	}
-	err = os.Remove(filePath)
+	err = os.Remove(msg.FilePath)
 	if err != nil {
-		return "", err
+		outputMQ <- model.OutputMessage{
+			Error: err,
+		}
 	}
 
-	return string(output), nil
+	outputMQ <- model.OutputMessage{
+		Output: string(output),
+	}
 }

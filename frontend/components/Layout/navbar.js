@@ -37,7 +37,7 @@ export default function Navbar() {
         ) : (
           <div className="avatar dropdown dropdown-hover dropdown-end">
             <div className="w-10 hover:cursor-pointer rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
             <ul className="dropdown-content z-[1] menu p-2 shadow bg-white text-black font-semibold rounded-box w-[140px]">
               <li>
