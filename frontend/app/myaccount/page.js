@@ -40,41 +40,41 @@ export default function MyAccountPage() {
               <h1>{user?.username}</h1>
               <span className="font-light text-[12px]">{user?.email}</span>
             </div>
-            <span>solved: 12</span>
+            <span>solved: 1</span>
           </div>
         </div>
         <div className="flex flex-col gap-4 bg-base-200 px-16 py-4 rounded-lg ">
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-green-400">Easy</span>
-              <span>5/21</span>
+              <span>1/1</span>
             </div>
             <progress
               className="progress progress-success w-56"
-              value="25"
-              max="100"
+              value="1"
+              max="1"
             ></progress>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-yellow-400">Medium</span>
-              <span>5/21</span>
+              <span>0/1</span>
             </div>
             <progress
               className="progress progress-warning w-56"
-              value="25"
-              max="100"
+              value="0"
+              max="1"
             ></progress>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex gap-4">
               <span className="text-red-400">Hard</span>
-              <span>3/21</span>
+              <span>0/1</span>
             </div>
             <progress
               className="progress progress-error w-56"
-              value="30"
-              max="100"
+              value="0"
+              max="1"
             ></progress>
           </div>
         </div>
