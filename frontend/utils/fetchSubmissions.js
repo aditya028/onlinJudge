@@ -1,15 +1,12 @@
 import axios from "axios";
 
-export const fetchSubmissions = async ({ isAccepted, problemID }) => {
+export const fetchSubmissions = async ( isAccepted = "" , problemID = "") => {
   const token = localStorage.getItem("token");
   try {
-    const response = await axios.get("http://localhost:8080/api/submission", {
+    const url = `http://localhost:8080/api/submission?isAccepted=${isAccepted}&problemID=${problemID}`
+    const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
-      params: {
-        isAccepted: isAccepted,
-        problemID: problemID,
       },
     });
     return response.data;

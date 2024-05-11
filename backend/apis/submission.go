@@ -8,7 +8,6 @@ import (
 	"onlineJudge-backend/internal/db"
 	"onlineJudge-backend/internal/helper"
 	"onlineJudge-backend/model"
-	"strconv"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -48,12 +47,7 @@ func submission(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if isAccepted != "" {
-		isAcceptedBool, err := strconv.ParseBool(isAccepted)
-		if err != nil {
-			helper.ErrorX(w, err, "Failed to parse isAccepted")
-			return
-		}
-		filter["isAccepted"] = isAcceptedBool
+		filter["isAccepted"] = true
 	}
 	// Fetch submission from the database
 	coll := db.Client.Database(collection.DB_NAME).Collection(collection.SUBMISSION)

@@ -20,8 +20,8 @@ export default function MyAccountPage() {
   }, [])
 
   useEffect(() => {
-    const params = isRecentActive ? {isAccepted: true} : {} ;
-    fetchSubmissions(params).then((data) => {
+    const isAccepted = isRecentActive ? "true" : ""
+    fetchSubmissions(isAccepted).then((data) => {
       setSubmissions(data);
     }).catch((error) => {
       console.log(error);
@@ -33,7 +33,7 @@ export default function MyAccountPage() {
       <div className="flex gap-4 m-auto">
         <div className="flex gap-4 bg-base-200 py-10 px-16 rounded-lg font-semibold">
           <div className="w-24 rounded-lg overflow-hidden">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
           </div>
           <div className="flex flex-col py-2 justify-between">
             <div>

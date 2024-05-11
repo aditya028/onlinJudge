@@ -14,8 +14,8 @@ export default function page() {
   const id = pathname.split("/")[2];
 
   const [tab, setTab] = useState(1);
-  const [problem , setProblem] = useState({}) ;
-  const [submissions , setSubmissions] = useState() ;
+  const [problem, setProblem] = useState({});
+  const [submissions, setSubmissions] = useState();
 
   useEffect(() => {
     // Fetch the problem statement
@@ -30,14 +30,14 @@ export default function page() {
 
   useEffect(() => {
     if (tab !== 3) return;
-    fetchSubmissions({ problemId: id })
+    fetchSubmissions("", id)
       .then((data) => {
         setSubmissions(data);
       })
       .catch((error) => {
         console.error(`Error: ${error}`);
       });
-  },[tab]);
+  }, [tab]);
 
   return (
     <div className="flex p-4 gap-4">
@@ -68,13 +68,13 @@ export default function page() {
             </button>
           </div>
         </div>
-        {tab === 1 && <Description problem={problem}/>}
+        {tab === 1 && <Description problem={problem} />}
         {tab === 2 && <Solution codeString={problem.code} />}
-        {tab === 3 && <Submission submissions={submissions}/>}
+        {tab === 3 && <Submission submissions={submissions} />}
       </div>
 
       {/* For coding area and output */}
-      <CodeArena id={problem.id} title={problem.title}/>
+      <CodeArena id={problem.id} title={problem.title} />
     </div>
   );
 }
