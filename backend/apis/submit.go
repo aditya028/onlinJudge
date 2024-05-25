@@ -14,6 +14,7 @@ type RequestBody struct {
 	Code     string `json:"code"`
 	Language string `json:"language"`
 	Title    string `json:"title"`
+	Type     string `json:"type"`
 }
 
 type Result struct {
@@ -21,6 +22,7 @@ type Result struct {
 	StdInput  string `json:"stdInput"`
 	ExpOutput string `json:"expOutput"`
 	Accepted  bool   `json:"accepted"`
+	Type      string `json:"type"`
 }
 
 func submit(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +51,7 @@ func submit(w http.ResponseWriter, r *http.Request) {
 	codeString := reqBody.Code
 	language := reqBody.Language
 	title := reqBody.Title
+	submitType := reqBody.Type
 
 	testInput, testOutput, err := helper.GetTestCase(id)
 	if err != nil {
@@ -83,6 +86,15 @@ func submit(w http.ResponseWriter, r *http.Request) {
 		StdOutput: output.Output,
 		StdInput:  testInput,
 		ExpOutput: testOutput,
+		Type:      submitType,
+	}
+
+	if submitType == "run" {
+		err := json.NewEncoder(w).Encode(result)
+		if err != nil {
+			helper.ErrorX(w, err, "Error decoding code")
+		}
+		return
 	}
 
 	if output.Output == testOutput {

@@ -1,14 +1,21 @@
 import axios from "axios";
 
-export default async function submitCode(code, problemID , language , title) {
+export default async function submitCode(
+  code,
+  problemID,
+  language,
+  title,
+  type
+) {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      `http://localhost:8080/api/submit/${problemID}`,
+      process.env.NEXT_PUBLIC_BASE_URL + `/api/submit/${problemID}`,
       {
         code: code,
         language: language,
         title: title,
+        type: type,
       },
       {
         headers: {

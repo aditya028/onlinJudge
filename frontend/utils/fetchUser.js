@@ -5,7 +5,7 @@ export default async function fetchUser() {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.get("http://localhost:8080/api/myaccount", {
+    const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL+"/api/myaccount", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

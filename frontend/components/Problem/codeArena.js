@@ -9,8 +9,8 @@ export default function CodeArena({ id , title}) {
   const [isCompiled, setIsCompiled] = useState(false);
   const [result, setResult] = useState({});
 
-  const handleSubmit = () => {
-    submitCode(code, id , 'cpp' , title)
+  const handleSubmit = (type) => {
+    submitCode(code, id , 'cpp' , title , type)
       .then((data) => {
         if (data == "Compilation error")
           setResult({ error: "Compilation error" });
@@ -77,13 +77,13 @@ export default function CodeArena({ id , title}) {
             <div className="mx-auto p-5 font-semibold badge badge-error gap-2">{result.error}</div>
           ) : (
             <div className="p-5 flex flex-col gap-3 overflow-y-scroll">
-              <div
+              {result.type === "submit" && <div
                 className={`badge badge-${
                   result.accepted ? "success" : "error"
                 } gap-2`}
               >
                 {result.accepted ? "Accepted" : "Wrong Answer"}
-              </div>
+              </div>}
               <div>
                 <h3 className="text-[#9e9e9e]">Std Input</h3>
                 <pre className="bg-[#2b2b2b] p-4 rounded-lg ">
@@ -108,13 +108,13 @@ export default function CodeArena({ id , title}) {
           ""
         )}
         <div className="flex justify-center items-center gap-3 py-1">
-          <button disabled className="btn btn-sm btn-neutral">
+          <button onClick={() => handleSubmit("run")} className="btn btn-sm btn-neutral">
             Run
           </button>
           <button
             disabled={localStorage.getItem("token") ? false : true}
             className="btn btn-sm btn-success"
-            onClick={() => handleSubmit()}
+            onClick={() => handleSubmit("submit")}
           >
             Submit
           </button>
