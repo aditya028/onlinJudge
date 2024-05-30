@@ -17,6 +17,7 @@ type SubmissionResult struct {
 	Title      string    `json:"title"`
 	IsAccepted bool      `json:"isAccepted"`
 	Language   string    `json:"language"`
+	Difficulty string    `json:"difficulty"`
 	Time       time.Time `json:"time"`
 }
 
@@ -76,6 +77,7 @@ func submission(w http.ResponseWriter, r *http.Request) {
 			IsAccepted: submission.IsAccepted,
 			Language:   submission.Language,
 			Time:       submission.Time,
+			Difficulty: submission.Difficulty,
 		}
 		result = append(result, res)
 	}

@@ -74,7 +74,7 @@ export default function page() {
       </div>
 
       {/* For coding area and output */}
-      <CodeArena id={problem.id} title={problem.title} />
+      <CodeArena id={problem.id} title={problem.title} difficulty={problem.difficulty}/>
     </div>
   );
 }

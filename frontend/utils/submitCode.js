@@ -5,7 +5,8 @@ export default async function submitCode(
   problemID,
   language,
   title,
-  type
+  type,
+  difficulty
 ) {
   try {
     const token = localStorage.getItem("token");
@@ -16,6 +17,7 @@ export default async function submitCode(
         language: language,
         title: title,
         type: type,
+        difficulty: difficulty,
       },
       {
         headers: {

@@ -2,7 +2,7 @@ import submitCode from "@/utils/submitCode";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
-export default function CodeArena({ id , title}) {
+export default function CodeArena({ id , title , difficulty}) {
   const [language, setLanguage] = useState("cpp");
   const [testTab, setTestTab] = useState(1);
   const [code, setCode] = useState("//Enter your code here");
@@ -10,7 +10,7 @@ export default function CodeArena({ id , title}) {
   const [result, setResult] = useState({});
 
   const handleSubmit = (type) => {
-    submitCode(code, id , 'cpp' , title , type)
+    submitCode(code, id , 'cpp' , title , type , difficulty)
       .then((data) => {
         if (data == "Compilation error")
           setResult({ error: "Compilation error" });

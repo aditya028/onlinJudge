@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func CreateSubmission(code, id, email ,language, title string, isAccepted bool) {
+func CreateSubmission(code, id, email, language, title, difficulty string, isAccepted bool) {
 	coll := db.Client.Database(collection.DB_NAME).Collection(collection.SUBMISSION)
 	doc := model.Submission{
 		ProblemID:  id,
@@ -19,6 +19,7 @@ func CreateSubmission(code, id, email ,language, title string, isAccepted bool) 
 		IsAccepted: isAccepted,
 		Language:   language,
 		Title:      title,
+		Difficulty: difficulty,
 	}
 	_, err := coll.InsertOne(context.TODO(), doc)
 	if err != nil {

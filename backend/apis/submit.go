@@ -11,10 +11,11 @@ import (
 )
 
 type RequestBody struct {
-	Code     string `json:"code"`
-	Language string `json:"language"`
-	Title    string `json:"title"`
-	Type     string `json:"type"`
+	Code       string `json:"code"`
+	Language   string `json:"language"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
+	Difficulty string `json:"difficulty"`
 }
 
 type Result struct {
@@ -52,6 +53,7 @@ func submit(w http.ResponseWriter, r *http.Request) {
 	language := reqBody.Language
 	title := reqBody.Title
 	submitType := reqBody.Type
+	difficulty := reqBody.Difficulty
 
 	testInput, testOutput, err := helper.GetTestCase(id)
 	if err != nil {
@@ -99,14 +101,14 @@ func submit(w http.ResponseWriter, r *http.Request) {
 
 	if output.Output == testOutput {
 		result.Accepted = true
-		helper.CreateSubmission(codeString, id, email, language, title, true)
+		helper.CreateSubmission(codeString, id, email, language, title, difficulty, true)
 		err := json.NewEncoder(w).Encode(result)
 		if err != nil {
 			helper.ErrorX(w, err, "Error decoding code")
 		}
 	} else {
 		result.Accepted = false
-		helper.CreateSubmission(codeString, id, email, language , title, false)
+		helper.CreateSubmission(codeString, id, email, language, title, difficulty, false)
 		err := json.NewEncoder(w).Encode(result)
 		if err != nil {
 			helper.ErrorX(w, err, "Error decoding code")

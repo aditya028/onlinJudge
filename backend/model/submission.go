@@ -15,4 +15,5 @@ type Submission struct {
 	IsAccepted bool               `json:"isAccepted" bson:"isAccepted"`
 	Language   string             `json:"language" bson:"language"`
 	Title      string             `json:"title" bson:"title"`
+	Difficulty string             `json:"difficulty" bson:"difficulty"`
 }
