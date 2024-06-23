@@ -2,9 +2,11 @@ package helper
 
 import (
 	"bytes"
+	"context"
 	"onlineJudge-backend/model"
 	"os"
 	"os/exec"
+	"time"
 )
 
 // Execute function takes a message from the message queue and executes the code
@@ -24,18 +26,27 @@ func Execute() {
 		}
 	}
 
-	cmd = exec.Command("./output")
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+    defer cancel()
 
-	if msg.Input != "" {
-		cmd.Stdin = bytes.NewBufferString(msg.Input)
-	}
+    cmd = exec.CommandContext(ctx, "./output")
 
-	output, err := cmd.Output()
-	if err != nil {
-		outputMQ <- model.OutputMessage{
-			Error: err,
-		}
-	}
+    if msg.Input != "" {
+        cmd.Stdin = bytes.NewBufferString(msg.Input)
+    }
+
+    output, err := cmd.Output()
+    if ctx.Err() == context.DeadlineExceeded {
+        outputMQ <- model.OutputMessage{
+            Error: err,
+        }
+        return
+    } else if err != nil {
+        outputMQ <- model.OutputMessage{
+            Error: err,
+        }
+        return
+    }
 
 	err = os.Remove("output")
 	if err != nil {
